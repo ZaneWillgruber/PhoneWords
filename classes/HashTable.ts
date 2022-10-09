@@ -1,28 +1,44 @@
 
 export class HashTable {
     private table: Entry[];
-    private primeNum: number = 11519;
+    private primeNum: number = 234193;
 
     constructor() {
         this.table = [];
     }
 
     public insert(value: string): void {
-        const entry = new Entry(value);
-        const hash = this.hash(value);
+        const hashAndKey = this.hash(value);
+        const entry = new Entry(hashAndKey[0], value);
+        const hash = hashAndKey[1];
         if(this.table[hash] === undefined) {
             this.table[hash] = entry;
         } else {
-            this.table[hash].add(entry);
+            if(this.table[hash].key == entry.key) {
+                this.table[hash].add(entry);
+            }
+            else {
+                this.rehashTable();
+                this.insert(value);
+            }
         }
     }
 
     public search(key: number): Entry {
-        key = Math.floor(this.primeNum * ((key * (Math.sqrt(5) - 1) / 2) % 1));
+        var hashWord = key.toString();
+        var hash = 0;
+        
+        for (var i = 0; i< hashWord.length; i++) {
+            var char = hashWord.charCodeAt(i);
+            hash = ((hash<<5)-hash)+char;
+            hash = hash & hash;
+        }
+
+        key = Math.floor(this.primeNum * ((Math.abs(hash) * (Math.sqrt(5) - 1) / 2) % 1));
         return this.table[key];
     }
 
-    private hash(value: string): number {
+    private hash(value: string): number[] {
         const letterToNumber = new Map<number, string[]>([
             [2, ['a', 'b', 'c']],
             [3, ['d', 'e', 'f']],
@@ -45,15 +61,57 @@ export class HashTable {
             });
         }
 
-        return Math.floor(this.primeNum * ((hash * (Math.sqrt(5) - 1) / 2) % 1));
+        var secondHash = 0;
+        var hashWord = hash.toString();
+        for (var i = 0; i< hashWord.length; i++) {
+            var char = hashWord.charCodeAt(i);
+            secondHash = ((secondHash<<5)-secondHash)+char;
+            secondHash = secondHash & secondHash;
+        }
+
+        //return[hash, secondHash];
+
+        return [hash, Math.floor(this.primeNum * ((Math.abs(secondHash) * (Math.sqrt(5) - 1) / 2) % 1))];
+    }
+
+    private rehashTable(): void {
+        console.log("Rehashing table...");
+        const oldTable = this.table;
+        this.table = [];
+        this.primeNum = this.nextPrime(this.primeNum * 2);
+        oldTable.forEach(entry => {
+            this.insert(entry.value);
+        });
+    }
+
+    private isPrime(num: number): boolean {
+        if(num < 2) {
+            return false;
+        }
+        for(let i = 2; i < num; i++) {
+            if(num % i === 0) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private nextPrime(num: number): number {
+        while(!this.isPrime(num)) {
+            num++;
+        }
+        return num;
     }
 }
 
 export class Entry {
+    key: number;
     value: string;
     next: Entry | null;
 
-    constructor(value: string) {
+    constructor(key: number, value: string) {
+        this.key = key;
         this.value = value;
         this.next = null;
     }

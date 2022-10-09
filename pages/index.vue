@@ -3,23 +3,20 @@ import { HashTable } from '~~/classes/HashTable';
 
 const { data: words } = await useFetch(() => `/api/words`)
 const wordTable = new HashTable();
-console.log(wordTable);
 
-for(const key of Object.keys(words.value)) {
-    console.log(`${key}`);
+for (const key of Object.keys(words.value)) {
     words.value[key].forEach((word) => {
-        wordTable.insert(word);
+        if (word.length == 10 || word.length == 7 || word.length == 4 || word.length == 3) {
+            wordTable.insert(word);
+        }
     });
 }
-
-console.log(wordTable);
-console.log(wordTable.search(793));
 
 </script>
 
 <template>
-    <PhoneWords />
+    <PhoneWords :hashTable="wordTable"/>
     <div class="awesome-component">
-        <pre>{{ words }}</pre>
+        <pre></pre>
     </div>
 </template>
