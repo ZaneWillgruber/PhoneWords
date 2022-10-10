@@ -12,6 +12,7 @@ for (const key of Object.keys(words.value)) {
     });
 }
 
+console.log(wordTable.search(2243));
 </script>
 
 <template>

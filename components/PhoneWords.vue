@@ -7,6 +7,10 @@
         <p style="color:red" v-if="number.length != 14">Must be a valid phone number</p>
         <p v-if="showNumber">{{ number }}</p>
         <p> {{ words }}</p>
+        <div v-for="word in words" :key="word">
+            {{ word }}
+        </div>
+
     </div>
 </template>
 
@@ -31,26 +35,32 @@ export default {
                 [3, []]
             ]);
             if (this.number.length == 14) {
-                var num = this.number.replace(/\D/g, '');
-                //this.words = this.hashTable.search(num);
-
-                //first seartch for 10 digit words
                 var tempList = [];
-                var temp = this.hashTable.search(num);
-                do {
-                    tempList.push(temp.value.toString());
-                    if (temp.next != null) {
-                        temp = temp.next;
-                    }
-                }
-                while (temp.next != null);
-                wordList.set(10, tempList);
+                wordList.forEach((value, key) => {
+                    var num = this.number.replace(/\D/g, '');
+                    var numSubString = key == 3 ? num.toString().substring(3, 6) : num.toString().substring(0 + (num.length - key), num.length);
+                    console.log(numSubString);
+                    console.log(parseInt(numSubString));
 
-                this.words = wordList;
+                    
+                    var temp = this.hashTable.search(parseInt(numSubString));
+                    if (temp != null) {
+                        do {
+                            tempList.push(temp.value.toString());
+                            temp = temp.next;
+                        }
+                        while (temp != null);
+                        wordList.set(key, tempList);
+                    }
+                    
+                });
+
+                
+                this.words = tempList;
 
             }
-            else {
-                this.words = "";
+            else if (this.number.length < 14) {
+                this.words = '';
             }
             //this.words = this.number;
             //this.words = this.hashTable.search(this.number);
@@ -60,6 +70,7 @@ export default {
         number: '',
         showNumber: false,
         words: '',
+        words10: [],
     }),
 }
 </script>

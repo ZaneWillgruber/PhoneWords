@@ -22,6 +22,12 @@ export class HashTable {
                 this.insert(value);
             }
         }
+        if(value == "acid") {
+            console.log("Acid Hash: " + hash);
+        }
+        if(value == "ache") {
+            console.log("Ache Hash: " + hash);
+        }
     }
 
     public search(key: number): Entry {
@@ -81,6 +87,14 @@ export class HashTable {
         this.primeNum = this.nextPrime(this.primeNum * 2);
         oldTable.forEach(entry => {
             this.insert(entry.value);
+            while(entry.next !== null) {
+                this.insert(entry.next.value);
+                entry = entry.next;
+            }
+            // if(entry.value == "ache") {
+            //     console.log(entry);
+            // }
+            // this.insert(entry.value);
         });
     }
 
@@ -109,11 +123,13 @@ export class Entry {
     key: number;
     value: string;
     next: Entry | null;
+    last: Entry | null;
 
     constructor(key: number, value: string) {
         this.key = key;
         this.value = value;
         this.next = null;
+        this.last = null;
     }
 
     public add(value: Entry): void {
@@ -122,5 +138,6 @@ export class Entry {
         } else {
             this.next.add(value);
         }
+        this.last = value;
     }
 }
