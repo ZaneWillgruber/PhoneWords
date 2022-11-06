@@ -2,7 +2,6 @@
     <div style="text-align: center;">
         <p>Number is: {{ number }}</p>
         <input v-on:input="findWords" v-model="number" placeholder="(000) 000-000" @input="acceptNumber" />
-        <button @click="showNumber = !showNumber"> Submit </button>
         <br>
         <p style="color:red" v-if="number.length != 14">Must be a valid phone number</p>
         <p v-if="showNumber">{{ number }}</p>
@@ -75,6 +74,15 @@ export default {
 }
 </script>
 
-<style lang="">
-    
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Didact+Gothic&display=swap');
+
+    :root {
+        font-family: 'Didact Gothic', sans-serif;
+    }
+
+    input {
+        font-size: xx-large;
+        text-align: center;
+    }
 </style>
