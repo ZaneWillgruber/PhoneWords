@@ -19,11 +19,10 @@ for (const key of Object.keys(words.value)) {
         <h1>PhoneWords</h1>
         <h2>Turn your phone number into words!</h2>
     </div>
-    <PhoneWords :hashTable="wordTable"/>
-    <div class="awesome-component">
-        <pre></pre>
-    </div>
+
     <Footer />
+
+    <PhoneWords :hashTable="wordTable"/>
 </template>
 
 <style>
