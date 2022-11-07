@@ -18,7 +18,5 @@ export class Init {
             }
                 , (err: any, data: any) => { });
         });
-
-        console.log(hashTable);
     }
 }

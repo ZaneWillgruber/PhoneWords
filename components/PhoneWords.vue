@@ -3,7 +3,8 @@
         <input v-on:input="findWords" v-model="number" placeholder="(000) 000-000" @input="acceptNumber" />
         <br>
         <p style="color:red" v-if="number.length != 14">Must be a valid phone number</p>
-        <p v-if="showNumber">{{ number }}</p>
+        
+        <h2 v-if="words.length == 0 && number.length == 14"> Your phone number can't be translated to words :(</h2>
 
         <div v-if="hasContent(words, 3) != false && hasContent(words, 4) != false">
             <h2>3 and 4 letter words:</h2>
@@ -74,13 +75,11 @@ export default {
 
                 });
 
-
                 this.words = tempList;
-                this.wordLists = wordList;
 
             }
             else if (this.number.length < 14) {
-                this.words = '';
+                this.words = [];
             }
             //this.words = this.number;
             //this.words = this.hashTable.search(this.number);
@@ -112,14 +111,7 @@ export default {
     },
     data: () => ({
         number: '',
-        showNumber: false,
-        words: '',
-        wordLists: new Map([
-            [10, []],
-            [7, []],
-            [4, []],
-            [3, []]
-        ])
+        words: []
     }),
 }
 </script>
