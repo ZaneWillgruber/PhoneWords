@@ -22,12 +22,6 @@ export class HashTable {
                 this.insert(value);
             }
         }
-        if(value == "acid") {
-            console.log("Acid Hash: " + hash);
-        }
-        if(value == "ache") {
-            console.log("Ache Hash: " + hash);
-        }
     }
 
     public search(key: number): Entry {
@@ -91,10 +85,6 @@ export class HashTable {
                 this.insert(entry.next.value);
                 entry = entry.next;
             }
-            // if(entry.value == "ache") {
-            //     console.log(entry);
-            // }
-            // this.insert(entry.value);
         });
     }
 

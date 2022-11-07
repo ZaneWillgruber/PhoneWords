@@ -12,7 +12,6 @@ for (const key of Object.keys(words.value)) {
     });
 }
 
-console.log(wordTable.search(2243));
 </script>
 
 <template>
@@ -38,6 +37,13 @@ console.log(wordTable.search(2243));
         font-size: 5em;
         margin-bottom: 0%;
     }
+
+    h2 {
+        font-family: 'Didact Gothic', sans-serif;
+        text-align: center;
+        color: #7D6E83;
+    }
+
     :root {
         background-color: #F8EDE3;
     }
