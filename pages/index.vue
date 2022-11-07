@@ -24,6 +24,7 @@ console.log(wordTable.search(2243));
     <div class="awesome-component">
         <pre></pre>
     </div>
+    <Footer />
 </template>
 
 <style>

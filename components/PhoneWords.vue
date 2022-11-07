@@ -6,7 +6,7 @@
         <p style="color:red" v-if="number.length != 14">Must be a valid phone number</p>
         <p v-if="showNumber">{{ number }}</p>
         <p> {{ words }}</p>
-        <div v-for="word in words" :key="word">
+        <div v-for="word in words">
             {{ word }}
         </div>
 
