@@ -1,3 +1,9 @@
+# PhoneWords
+
+## Live Version:
+
+https://phonewords.netlify.app/
+
 # Nuxt 3 Minimal Starter
 
 Look at the [nuxt 3 documentation](https://v3.nuxtjs.org) to learn more.
